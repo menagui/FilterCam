@@ -4,3 +4,5 @@ output/
 .vs/
 *.user
 *.suo
+.idea/
+cmake-build-*/

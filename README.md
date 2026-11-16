@@ -1,8 +1,8 @@
 # FilterCam - Grau B
 
-Autor: Guilherme Menna Barreto.
+Autor: Guilherme Menna Barreto e Lucas de Paula da Silva.
 
-Trabalho de Processamento Grafico: Fundamentos. Prototipo de um aplicativo para aplicar efeitos em fotos e em video ao vivo da webcam, desenvolvido em C++17 com OpenCV 4 e sua interface basica HighGUI.
+Trabalho de Processamento Grafico: Fundamentos. Prototipo de um aplicativo para aplicar efeitos em fotos e em video ao vivo da webcam, desenvolvido em C++17 com OpenCV 4 e sua interface basica HighGUI. A interface (painel lateral, botoes, sliders e miniaturas de stickers) e desenhada manualmente sobre a janela do HighGUI, em branco e azul-marinho.
 
 ## Base dos trabalhos anteriores
 
@@ -22,7 +22,7 @@ FilterCam/
 |-- src/
 |   |-- main.cpp        # entrada, argumentos e localizacao dos recursos
 |   |-- Aplicativo.h
-|   |-- Aplicativo.cpp  # foto, webcam, teclado, mouse e HighGUI
+|   |-- Aplicativo.cpp  # foto, webcam, interface desenhada, teclado, mouse e HighGUI
 |   |-- Processamento.h
 |   `-- Processamento.cpp # filtros, canais, aritmetica, alfa e PNG
 `-- tests/
@@ -82,22 +82,33 @@ Uma foto inicial e um indice de webcam podem ser passados por argumento:
 
 Os recursos sao localizados junto ao executavel. O programa pode ser iniciado de outra pasta. No Windows, os argumentos de linha de comando usam a entrada Unicode (`wmain`). Os caminhos digitados no console aceitam espacos, acentos e aspas externas; o aplicativo configura o console para UTF-8.
 
-## Controles
+## Interface e controles
 
-Clique na janela de imagem para que ela receba as teclas.
+A janela tem uma barra superior com o efeito aplicado, a imagem em um cartao central, um painel lateral de controles e, no rodape, as miniaturas dos stickers e a linha de status. Tudo pode ser feito com o mouse; os atalhos de teclado continuam disponiveis. Clique na janela de imagem para que ela receba as teclas.
+
+### Painel lateral (mouse)
+
+| Controle | Acao |
+|---|---|
+| Slider Filtro | Seleciona original (`0`) ou um dos 10 filtros (`1` a `10`). Arraste ou clique. |
+| Botoes Canal | Seleciona RGB, R, G ou B. |
+| Slider Parametro P | Escolhe o parametro entre 0 e 255. |
+| Botoes Operacao | Seleciona nenhuma, adicao (`+`), subtracao (`-`) ou blending. |
+| Botao APLICAR | Aplica o filtro/operacao selecionado com o parametro escolhido (igual a `Enter`). |
+| Botoes Foto, Webcam, Img B | Equivalem a `F`, `V` e `O`. |
+| Botoes Salvar, Reset, Ajuda | Equivalem a `S`, `R` e `H`. |
+| Miniaturas de stickers | Selecionam Link, Princesa, Arvore, Arbusto ou Ponte. Clicar de novo desmarca. |
+
+### Atalhos de teclado
 
 | Entrada | Acao |
 |---|---|
 | `F` | Solicita no console o caminho de uma foto do disco. Enter vazio cancela. |
 | `V` | Inicia ou para a webcam. Ao parar, preserva o ultimo frame. |
 | `O` | Solicita no console o caminho da segunda imagem das operacoes. |
-| Barra Filtro | Seleciona original (`0`) ou um dos 10 filtros (`1` a `10`). |
-| Barra Canal | Seleciona RGB (`0`), R (`1`), G (`2`) ou B (`3`). |
-| Barra Parametro P | Escolhe o parametro entre 0 e 255. |
-| Barra Operacao | Seleciona nenhuma (`0`), adicao (`1`), subtracao (`2`) ou blending (`3`). |
 | `Enter` | Aplica o filtro/operacao selecionado com o parametro escolhido. |
 | `1` a `5` | Seleciona Link, Princesa, Arvore, Arbusto ou Ponte. |
-| Clique esquerdo | Posiciona o sticker selecionado no Modo Foto. |
+| Clique esquerdo | Posiciona o sticker selecionado na foto (somente no Modo Foto). |
 | `0` | Desmarca o sticker, sem remover os ja posicionados. |
 | `S` | Salva a foto resultante ou o frame atual como PNG. |
 | `R` | Restaura a origem: remove efeito e stickers e volta a RGB. |
@@ -106,9 +117,11 @@ Clique na janela de imagem para que ela receba as teclas.
 
 Ao carregar arquivos, volte ao console para digitar o caminho e depois clique novamente na imagem. Durante essa entrada, o video fica temporariamente sem atualizacao.
 
+Stickers so funcionam no Modo Foto. Se a webcam estiver ligada (ou parada com o ultimo frame), carregue uma foto com `F` para usa-los.
+
 ## Filtros
 
-A selecao exibe a descricao e os parametros no console **antes** de aplicar. A janela mostra separadamente o efeito selecionado e o aplicado. Mudar filtro ou parametro exige Enter; mudar o canal atualiza imediatamente a imagem principal.
+A selecao exibe a descricao e os parametros no console **antes** de aplicar. A janela mostra o filtro selecionado no painel e o efeito aplicado na barra superior. Mudar filtro ou parametro exige Aplicar (ou Enter); mudar o canal atualiza imediatamente a imagem principal.
 
 | Numero | Filtro | Operacao/parametro |
 |---|---|---|
@@ -129,7 +142,7 @@ Em R/G/B, apenas o canal escolhido entra no processamento. Sua intensidade e exi
 
 ## Operacoes com duas imagens
 
-Carregue uma foto com `F` (ou inicie a webcam), carregue B com `O`, selecione a operacao na barra e pressione Enter. A segunda imagem e redimensionada para a resolucao da primeira. A selecao de canal vale para ambas.
+Carregue uma foto com `F` (ou inicie a webcam), carregue B com `O` (botao Img B), selecione a operacao no painel e clique em APLICAR. A segunda imagem e redimensionada para a resolucao da primeira. A selecao de canal vale para ambas. Escolher um filtro zera a operacao e escolher uma operacao zera o filtro.
 
 | Operacao | Formula, por pixel |
 |---|---|
@@ -141,7 +154,7 @@ As operacoes funcionam na foto e em cada frame da webcam, usando B como imagem e
 
 ## Stickers e salvamento
 
-Os cinco stickers estaticos com transparencia foram reaproveitados do Zelda; a origem de cada arquivo esta em `assets/README.md`. Selecione com `1` a `5` e clique na foto. O centro do sticker fica no clique, a proporcao e mantida e a parte que sair da imagem e recortada. A largura corresponde a aproximadamente 80 pixels da previa. A composicao usa `alfa*sticker + (1-alfa)*fundo`, com alfa entre 0 e 1.
+Os cinco stickers estaticos com transparencia foram reaproveitados do Zelda; a origem de cada arquivo esta em `assets/README.md`. Selecione pela miniatura (ou com `1` a `5`) e clique na foto. O centro do sticker fica no clique, a proporcao e mantida e a parte que sair da imagem e recortada. A largura corresponde a aproximadamente 80 pixels da previa. A composicao usa `alfa*sticker + (1-alfa)*fundo`, com alfa entre 0 e 1.
 
 Os stickers sao aplicados depois do filtro. A imagem original e preservada. `R` limpa todos os stickers e efeitos. Stickers ficam disponiveis somente no Modo Foto, como permitido pelo enunciado.
 
@@ -156,7 +169,7 @@ Os stickers sao aplicados depois do filtro. A imagem original e preservada. `R` 
 | 10 filtros, incluindo suavizacao e realce | `listaFiltros` / `aplicarFiltro` |
 | RGB ou R/G/B com resultado na imagem principal | `selecionarCanal` / `processar` |
 | 3 operacoes aritmeticas com duas imagens | `aplicarOperacao` |
-| Descricao antes da aplicacao e parametros | `descreverSelecao` e Enter para confirmar a selecao |
+| Descricao antes da aplicacao e parametros | `descreverSelecao` e Enter/APLICAR para confirmar a selecao |
 | 5 stickers com alfa e posicionamento pelo mouse | `carregarStickers`, `clicar` e `sobreporSticker` |
 | Salvar foto/frame | `Aplicativo::salvar` / `salvarPNG` |
 | Resetar para original | `Aplicativo::resetar` |
@@ -168,15 +181,13 @@ Cada filtro ou operacao substitui o anterior e parte da foto original ou do fram
 
 Os testes usam imagens sinteticas para conferir todos os filtros em RGB/R/G/B e nos extremos de parametro, saturacao das operacoes, preservacao da origem, reset do processamento, composicao alfa, recorte nas bordas, os cinco PNGs reais e gravacao/leitura de PNG com acentos no caminho. A fixture geometrica gerada nos testes lembra a casa dos exercicios da Lista 2.
 
-Na maquina de desenvolvimento, o script completo compilou em Release e passaram 412 verificacoes. A tentativa de abrir a webcam retornou dispositivo indisponivel; a captura real precisa ser conferida em um computador com camera. A ferramenta de captura de tela tambem nao conseguiu capturar a janela para a revisao visual automatica, portanto o roteiro interativo abaixo continua indicado.
-
 ```powershell
 ctest --test-dir build -C Release --output-on-failure
 ```
 
-Para conferir interativamente:
+O modo video foi conferido com uma webcam real, aplicando filtros ao vivo. Para conferir interativamente:
 
-1. Abra uma foto com `F`; selecione um filtro, leia a descricao e aplique com Enter.
+1. Abra uma foto com `F`; selecione um filtro, leia a descricao no console e aplique com APLICAR ou Enter.
 2. Selecione R, G e B; confira que a imagem principal exibe a intensidade do canal.
 3. Carregue B com `O` e teste cada operacao, incluindo P=0 e P=255.
 4. Selecione os cinco stickers e clique no centro e nas bordas da foto.
@@ -184,11 +195,11 @@ Para conferir interativamente:
 6. Pressione `R` e confira a foto original, sem stickers.
 7. Inicie a webcam com `V`, aplique filtros e operacoes, salve um frame, resete e pare com `V`.
 
-A validacao do video ao vivo exige uma webcam disponivel e autorizada pelo sistema. Se a camera estiver ocupada, desconectada ou bloqueada, o aplicativo exibe um erro e preserva a imagem anterior. Use `--camera 1` para tentar outro dispositivo.
+Se a camera estiver ocupada, desconectada ou bloqueada, o aplicativo exibe um erro e preserva a imagem anterior. Use `--camera 1` para tentar outro dispositivo.
 
 ## Entrega
 
-Versione os fontes, CMake, script, READMEs e assets. `.gitignore` exclui `build/`, `.deps/` e saidas. O enunciado pede entrega por link de repositorio; publique esta pasta no seu GitHub e envie o link no Moodle conforme as orientacoes da disciplina. A publicacao e o envio nao sao feitos automaticamente pelo aplicativo.
+Versione os fontes, CMake, script, READMEs e assets. `.gitignore` exclui `build/`, `.deps/` e saidas. O enunciado pede entrega por link de repositorio; publique esta pasta no GitHub e envie o link no Moodle conforme as orientacoes da disciplina (prazo: 25/11/2026, 23h59). A publicacao e o envio nao sao feitos automaticamente pelo aplicativo.
 
 ## Referencias
 
