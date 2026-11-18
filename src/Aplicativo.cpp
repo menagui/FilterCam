@@ -7,7 +7,7 @@
 #include <chrono>
 #include <iostream>
 
-static const std::vector<std::string> NOMES_STICKERS = {"Link", "Princesa", "Arvore", "Arbusto", "Ponte"};
+static const std::vector<std::string> NOMES_STICKERS = {"Charles", "Fallen", "GTA6", "Molodoy", "MVP"};
 
 // ---------------------------------------------------------------------------
 // Tema e layout da interface (cores em BGR)
