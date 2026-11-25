@@ -1,6 +1,6 @@
 # FilterCam - Grau B
 
-Autor: Guilherme Menna Barreto e Lucas de Paula da Silva.
+Autor: Guilherme Menna Barreto, Lucas de Paula da Silva e Henrique Mirco
 
 Trabalho de Processamento Grafico: Fundamentos. Prototipo de um aplicativo para aplicar efeitos em fotos e em video ao vivo da webcam, desenvolvido em C++17 com OpenCV 4 e sua interface basica HighGUI. A interface (painel lateral, botoes, sliders e miniaturas de stickers) e desenhada manualmente sobre a janela do HighGUI, em branco e azul-marinho.
 
