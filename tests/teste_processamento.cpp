@@ -100,7 +100,7 @@ int main(int argc, char **argv)
         conferir(fundo.at<cv::Vec3b>(0,0) == cv::Vec3b(12,34,56), "Sticker fora da imagem deve ser ignorado.");
 
         std::vector<cv::Mat> stickers;
-        for (const auto &nome : {"link.png","princesa.png","arvore.png","arbusto.png","ponte.png"})
+        for (const auto &nome : {"charles.png","fallen.png","gta6.png","molodoy.png","mvp.png"})
         {
             const auto imagem = lerImagem(std::filesystem::u8path(argv[1]) / "stickers" / nome, cv::IMREAD_UNCHANGED);
             conferir(imagem.type() == CV_8UC4, "Sticker real deve conter alfa.");

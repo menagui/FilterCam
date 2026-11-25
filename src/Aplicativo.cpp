@@ -161,7 +161,7 @@ Aplicativo::Aplicativo(std::filesystem::path pastaExecutavel, int camera)
 
 void Aplicativo::carregarStickers()
 {
-    for (const auto &nome : {"link.png", "princesa.png", "arvore.png", "arbusto.png", "ponte.png"})
+    for (const auto &nome : {"charles.png", "fallen.png", "gta6.png", "molodoy.png", "mvp.png"})
     {
         cv::Mat sticker = lerImagem(pasta / "assets" / "stickers" / nome, cv::IMREAD_UNCHANGED);
         if (sticker.type() != CV_8UC4) throw std::runtime_error("Sticker sem canal alfa: " + std::string(nome));
@@ -179,7 +179,7 @@ void Aplicativo::ajuda()
         << "Canal R/G/B: a imagem principal passa a exibir aquele canal em cinza\n"
         << "S: salvar resultado/frame em output/images, ao lado do executavel\n"
         << "R: resetar filtro, operacao, canal, parametro e todos os stickers\n"
-        << "1 Link | 2 Princesa | 3 Arvore | 4 Arbusto | 5 Ponte (ou clique na miniatura)\n"
+        << "1 Charles | 2 Fallen | 3 GTA6 | 4 Molodoy | 5 MVP (ou clique na miniatura)\n"
         << "Selecione e clique na foto; 0 desmarca o sticker\n"
         << "H: repetir ajuda | ESC: sair | Clique na janela antes de usar o teclado\n"
         << "Filtros e operacoes substituem o efeito anterior, usando sempre a origem.\n";
